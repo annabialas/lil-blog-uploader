@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = environ.get('FLASK_SECRET_KEY')
 
 # Specific to this proxy
-app.config['MAX_CONTENT_LENGTH'] = environ.get('MAX_CONTENT_LENGTH', 16 * 1024 * 1024) ## 16MB
+app.config['MAX_CONTENT_LENGTH'] = literal_eval(environ.get('MAX_CONTENT_LENGTH', 16 * 1024 * 1024)) ## 16MB
 app.config['S3_BUCKET'] = environ.get('S3_BUCKET')
 app.config['AWS_ACCESS_KEY_ID'] = environ.get('AWS_ACCESS_KEY_ID')
 app.config['AWS_SECRET_ACCESS_KEY'] = environ.get('AWS_SECRET_ACCESS_KEY')
