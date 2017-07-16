@@ -20,6 +20,9 @@ app.config['MAX_CONTENT_LENGTH'] = literal_eval(environ.get('MAX_CONTENT_LENGTH'
 app.config['S3_BUCKET'] = environ.get('S3_BUCKET')
 app.config['AWS_ACCESS_KEY_ID'] = environ.get('AWS_ACCESS_KEY_ID')
 app.config['AWS_SECRET_ACCESS_KEY'] = environ.get('AWS_SECRET_ACCESS_KEY')
+app.config['USER'] = environ.get('USER')
+app.config['PASSWORD'] = environ.get('PASSWORD')
+app.config['DB'] = environ.get('DB')
 
 # register error handlers
 error_handling.init_app(app)

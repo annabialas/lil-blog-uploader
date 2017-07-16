@@ -1,6 +1,6 @@
 import boto3
 import botocore
-from flask import render_template, current_app
+from flask import render_template, current_app, request
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
 import imghdr
@@ -116,6 +116,7 @@ def proxy_request(request, path):
                 filename = '{}-{}{}'.format(fn, ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(3)), ext)
                 continue
             unique_filename = True
+
         # Upload to s3
         s3 = boto3.client(
             's3',
