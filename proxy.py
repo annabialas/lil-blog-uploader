@@ -9,8 +9,10 @@ import string
 import random
 from werkzeug.utils import secure_filename
 from wtforms.validators import ValidationError
-import mysql.connector as mariadb
 from wtforms import StringField
+
+import mysql.connector as mariadb
+from datetime import datetime
 
 ##
 # Mime typing checking, taken straight from Perma (more rigorous than WTForms)
@@ -129,10 +131,9 @@ def proxy_request(request, path):
 
         # Get datetime of submission
 
-        image_title = 'imagetitle'
-        # now = datetime.now()
-        # image_datetime = now.strftime('%Y-%m-%d %H:%M:%S')
-        image_datetime = 'now'
+        image_title = 'anothertitle'
+        now = datetime.now()
+        image_datetime = now.strftime('%Y-%m-%d %H:%M:%S')
 
         # Upload to MariaDB
         mariadb_connection = mariadb.connect(host=current_app.config['HOST'], user=current_app.config['USER'], password=current_app.config['PASSWORD'], database=current_app.config['DB'])
