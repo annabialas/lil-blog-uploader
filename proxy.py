@@ -9,6 +9,8 @@ import string
 import random
 from werkzeug.utils import secure_filename
 from wtforms.validators import ValidationError
+import mysql.connector as mariadb
+from wtforms import StringField
 
 ##
 # Mime typing checking, taken straight from Perma (more rigorous than WTForms)
@@ -76,6 +78,7 @@ def valid_mimetype(form, field):
 class UploadForm(FlaskForm):
     file = FileField(validators=[FileRequired(), valid_mimetype],
                      label="valid formats: {}".format(", ".join(file_extension_lookup.keys())))
+    # title = StringField('Image Title')
 
 def proxy_request(request, path):
     '''
@@ -117,6 +120,35 @@ def proxy_request(request, path):
                 continue
             unique_filename = True
 
+        # Get new title for the img
+        # title = request.form['title']
+        # if title == '':
+        #     image_title = filename
+        # else:
+        #     image_title = title
+
+        # Get datetime of submission
+
+        image_title = 'imagetitle'
+        # now = datetime.now()
+        # image_datetime = now.strftime('%Y-%m-%d %H:%M:%S')
+        image_datetime = 'now'
+
+        # Upload to MariaDB
+        mariadb_connection = mariadb.connect(host=current_app.config['HOST'], user=current_app.config['USER'], password=current_app.config['PASSWORD'], database=current_app.config['DB'])
+
+        cursor = mariadb_connection.cursor()
+
+        try:
+            cursor.execute("INSERT INTO images (title,date) VALUES (%s,%s)", (image_title,image_datetime))
+        except mariadb.Error as error:
+            print "Error: {}".format(error)
+
+        mariadb_connection.commit()
+        print 'File inserted successfully!'
+
+        mariadb_connection.close()
+
         # Upload to s3
         s3 = boto3.client(
             's3',
@@ -124,6 +156,7 @@ def proxy_request(request, path):
             aws_secret_access_key=current_app.config['AWS_SECRET_ACCESS_KEY'],
         )
         s3.upload_fileobj(f.stream, 'archive-my-trash', filename, ExtraArgs={'ContentType': get_mime_type(filename)})
+
         return render_template('success.html', context={'heading': "Your file is up!" ,
                                                         'url': "https://{}.s3.amazonaws.com/{}".format(current_app.config['S3_BUCKET'], filename) })
     return render_template('uploader.html', context={'heading': 'Upload Media', 'limit': current_app.config['MAX_CONTENT_LENGTH']/1024/1024}, form=form)

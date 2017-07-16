@@ -23,6 +23,7 @@ app.config['AWS_SECRET_ACCESS_KEY'] = environ.get('AWS_SECRET_ACCESS_KEY')
 app.config['USER'] = environ.get('USER')
 app.config['PASSWORD'] = environ.get('PASSWORD')
 app.config['DB'] = environ.get('DB')
+app.config['HOST'] = environ.get('HOST')
 
 # register error handlers
 error_handling.init_app(app)
