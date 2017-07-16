@@ -80,7 +80,7 @@ def valid_mimetype(form, field):
 class UploadForm(FlaskForm):
     file = FileField(validators=[FileRequired(), valid_mimetype],
                      label="valid formats: {}".format(", ".join(file_extension_lookup.keys())))
-    # title = StringField('Image Title')
+    title = StringField()
 
 def proxy_request(request, path):
     '''
@@ -123,15 +123,15 @@ def proxy_request(request, path):
             unique_filename = True
 
         # Get new title for the img
-        # title = request.form['title']
-        # if title == '':
-        #     image_title = filename
-        # else:
-        #     image_title = title
+        title = request.form['title']
+        if title == '':
+            image_title = filename
+        else:
+            image_title = title
 
         # Get datetime of submission
 
-        image_title = 'anothertitle'
+        # image_title = 'anothertitle'
         now = datetime.now()
         image_datetime = now.strftime('%Y-%m-%d %H:%M:%S')
 
