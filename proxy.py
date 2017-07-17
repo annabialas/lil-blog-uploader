@@ -57,6 +57,10 @@ def get_filename(file_name):
     file_name = file_name.rsplit('.', 1)[-2]
     return file_name
 
+def get_extenstion(file_name):
+    file_extension = file_name.rsplit('.', 1)[-1].lower()
+    return file_extension
+
 def filename_already_used(filename):
     """Technique from https://stackoverflow.com/a/33843019"""
     s3 = boto3.resource('s3',
@@ -86,7 +90,7 @@ def valid_mimetype(form, field):
 class UploadForm(FlaskForm):
     file = FileField(validators=[FileRequired(), valid_mimetype],
                      label="valid formats: {}".format(", ".join(file_extension_lookup.keys())))
-    title = StringField()
+    title = StringField(label="Your Title")
 
 def proxy_request(request, path):
     '''
@@ -165,13 +169,18 @@ def proxy_request(request, path):
 
         mariadb_connection.close()
 
+        # Assign new filename based on the unique _id corresponding to the one in MariaDB
+        file_extension = get_extenstion(filename)
+        new_filename = '.'.join([image_id, file_extension])
+
         # Upload to s3
         s3 = boto3.client(
             's3',
             aws_access_key_id=current_app.config['AWS_ACCESS_KEY_ID'],
             aws_secret_access_key=current_app.config['AWS_SECRET_ACCESS_KEY'],
         )
-        s3.upload_fileobj(f.stream, 'archive-my-trash', filename, ExtraArgs={'ContentType': get_mime_type(filename)})
+
+        s3.upload_fileobj(f.stream, 'archive-my-trash', new_filename, ExtraArgs={'ContentType': get_mime_type(filename)})
 
         return render_template('success.html', context={'heading': "Your file is up!" ,
                                                         'url': "https://{}.s3.amazonaws.com/{}".format(current_app.config['S3_BUCKET'], filename) })

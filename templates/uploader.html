@@ -20,7 +20,7 @@
     <p>Upload any png, gif, or jpeg up to {{ context['limit'] }} MB</p>
     {{ form.file(accept=".png,.jpg,.jpeg,.gif") }}
     <div class="input text">
-      {{ form.title }}
+      {{ form.title.label }}{{ form.title }}
     </div>
     <p><button class="button button-primary" type="submit">Upload</button></p>
 
