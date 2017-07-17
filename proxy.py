@@ -52,6 +52,11 @@ def get_mime_type(file_name):
     file_extension = file_name.rsplit('.', 1)[-1].lower()
     return file_extension_lookup.get(file_extension)
 
+def get_filename(file_name):
+    """ Return original file name without the extension. """
+    file_name = file_name.rsplit('.', 1)[-2]
+    return file_name
+
 def filename_already_used(filename):
     """Technique from https://stackoverflow.com/a/33843019"""
     s3 = boto3.resource('s3',
@@ -127,8 +132,7 @@ def proxy_request(request, path):
         image_format = get_mime_type(filename)
 
         # Extract original file name (w/o file extension)
-        pos = len(filename)-len(image_format)
-        original_name = filename[:pos-1]
+        original_name = get_filename(filename)
 
         # Get user's title for the file
         title = request.form['title']
