@@ -13,6 +13,7 @@ from wtforms import StringField
 
 import mysql.connector as mariadb
 from datetime import datetime
+import calendar
 
 ##
 # Mime typing checking, taken straight from Perma (more rigorous than WTForms)
@@ -122,18 +123,28 @@ def proxy_request(request, path):
                 continue
             unique_filename = True
 
-        # Get new title for the img
+        # Get file format
+        image_format = get_mime_type(filename)
+
+        # Extract original file name (w/o file extension)
+        pos = len(filename)-len(image_format)
+        original_name = filename[:pos-1]
+
+        # Get user's title for the file
         title = request.form['title']
         if title == '':
-            image_title = filename
+            image_title = original_name
         else:
             image_title = title
 
         # Get datetime of submission
-
-        # image_title = 'anothertitle'
         now = datetime.now()
         image_datetime = now.strftime('%Y-%m-%d %H:%M:%S')
+
+        # Create a unique identifier for every image
+        ## Get a timestamp
+        timestamp = str(calendar.timegm(now.utctimetuple()))
+        image_id = '-'.join([timestamp, image_title])
 
         # Upload to MariaDB
         mariadb_connection = mariadb.connect(host=current_app.config['HOST'], user=current_app.config['USER'], password=current_app.config['PASSWORD'], database=current_app.config['DB'])
@@ -141,7 +152,7 @@ def proxy_request(request, path):
         cursor = mariadb_connection.cursor()
 
         try:
-            cursor.execute("INSERT INTO images (title,date) VALUES (%s,%s)", (image_title,image_datetime))
+            cursor.execute("INSERT INTO images (_id,date,format,original_filename,given_title) VALUES (%s,%s,%s,%s,%s)", (image_id,image_datetime,image_format,original_name,image_title))
         except mariadb.Error as error:
             print "Error: {}".format(error)
 
