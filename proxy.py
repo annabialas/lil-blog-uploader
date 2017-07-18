@@ -8,12 +8,13 @@ import os
 import string
 import random
 from werkzeug.utils import secure_filename
-from wtforms.validators import ValidationError
+from wtforms.validators import ValidationError, Regexp
 from wtforms import StringField
 
 import mysql.connector as mariadb
 from datetime import datetime
 import calendar
+import re
 
 ##
 # Mime typing checking, taken straight from Perma (more rigorous than WTForms)
@@ -90,7 +91,7 @@ def valid_mimetype(form, field):
 class UploadForm(FlaskForm):
     file = FileField(validators=[FileRequired(), valid_mimetype],
                      label="valid formats: {}".format(", ".join(file_extension_lookup.keys())))
-    title = StringField(label="Your Title")
+    title = StringField(validators=[Regexp('^\w+$', message="Username must contain only letters numbers or underscore")], label="Your Title")
 
 def proxy_request(request, path):
     '''
