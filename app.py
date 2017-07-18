@@ -41,7 +41,7 @@ def catch_all(path):
         http://flask.pocoo.org/docs/0.12/design/#the-routing-system
     '''
     def fallback():
-        return render_template('generic.html', context={'heading': "lil blog media uploader",
+        return render_template('generic.html', context={'heading': "Trash Exchange",
                                                         'message': "a static site helper"})
 
     try:
