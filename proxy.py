@@ -91,7 +91,7 @@ def valid_mimetype(form, field):
 class UploadForm(FlaskForm):
     file = FileField(validators=[FileRequired(), valid_mimetype],
                      label="valid formats: {}".format(", ".join(file_extension_lookup.keys())))
-    title = StringField(validators=[Regexp('^\w+$', message="Username must contain only letters numbers or underscore")], label="Your Title")
+    title = StringField(validators=[Regexp('^\w+$', message="Title must contain only letters numbers or underscore")], label="Your Title")
 
 def proxy_request(request, path):
     '''

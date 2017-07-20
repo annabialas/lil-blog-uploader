@@ -1,6 +1,74 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<div id="drop-zone">
+    Drop files here
+    <input type="file" name="file" id="file" />
+</div>
+
+<form method="POST" enctype="multipart/form-data" action="/">
+{{ form.csrf_token }}
+  <div class="input text">
+  {{ form.file(accept=".png,.jpg,.jpeg,.gif") }}
+  </div>
+</form>
+
+<p><button class="button button-primary" type="submit">Upload</button></p>
+
+<script>
+
+$(function () {
+
+    var dropZone = $("#drop-zone");
+    var ooleft = dropZone.offset().left;
+    var ooright = dropZone.outerWidth() + ooleft;
+    var ootop = dropZone.offset().top;
+    var oobottom = dropZone.outerHeight() + ootop;
+    var inputFile = dropZone.find("input");
+    document.getElementById("drop-zone").addEventListener("dragover", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.addClass("mouse-over");
+        var x = e.pageX;
+        var y = e.pageY;
+
+        if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
+            inputFile.offset({ top: y - 15, left: x - 100 });
+        } else {
+            inputFile.offset({ top: -400, left: -400 });
+        }
+
+    }, true);
+
+    // if (buttonId != "") {
+    //     var clickZone = $("#clickHere");
+
+    //     var oleft = clickZone.offset().left;
+    //     var oright = clickZone.outerWidth() + oleft;
+    //     var otop = clickZone.offset().top;
+    //     var obottom = clickZone.outerHeight() + otop;
+
+    //     $("#clickHere").mousemove(function (e) {
+    //         var x = e.pageX;
+    //         var y = e.pageY;
+    //         if (!(x < oleft || x > oright || y < otop || y > obottom)) {
+    //             inputFile.offset({ top: y - 15, left: x - 160 });
+    //         } else {
+    //             inputFile.offset({ top: -400, left: -400 });
+    //         }
+    //     });
+    // }
+
+    document.getElementById("drop-zone").addEventListener("drop", function (e) {
+        $("#drop-zone").removeClass("mouse-over");
+    }, true);
+
+})
+</script>
+
+
+<!-- 
   <form method="POST" enctype="multipart/form-data" action="/">
     {{ form.csrf_token }}
     {% if form.errors %}
@@ -24,5 +92,5 @@
     </div>
     <p><button class="button button-primary" type="submit">Upload</button></p>
 
-  </form>
+  </form> -->
 {% endblock content %}

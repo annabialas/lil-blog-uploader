@@ -1,3 +1,4 @@
+import os
 from os import environ
 from ast import literal_eval
 import requests
@@ -13,8 +14,21 @@ import logging
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = environ.get('FLASK_SECRET_KEY')
+# Fighting CSS caching via http://flask.pocoo.org/snippets/40/
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
 
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
+
+app.config['SECRET_KEY'] = environ.get('FLASK_SECRET_KEY')
 # Specific to this proxy
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 ## 16MB
 app.config['S3_BUCKET'] = environ.get('S3_BUCKET')
