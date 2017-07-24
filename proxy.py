@@ -15,6 +15,7 @@ import mysql.connector as mariadb
 from datetime import datetime
 import calendar
 import re
+from slugify import slugify
 
 ##
 # Mime typing checking, taken straight from Perma (more rigorous than WTForms)
@@ -91,7 +92,7 @@ def valid_mimetype(form, field):
 class UploadForm(FlaskForm):
     file = FileField(validators=[FileRequired(), valid_mimetype],
                      label="valid formats: {}".format(", ".join(file_extension_lookup.keys())))
-    title = StringField(validators=[Regexp('^\w+$', message="Title must contain only letters numbers or underscore")], label="Your Title")
+    title = StringField(label="Your Title")
 
 def proxy_request(request, path):
     '''
@@ -152,8 +153,9 @@ def proxy_request(request, path):
 
         # Create a unique identifier for every image
         ## Get a timestamp
+
         timestamp = str(calendar.timegm(now.utctimetuple()))
-        image_id = '-'.join([timestamp, image_title])
+        image_id = '-'.join([timestamp, slugify(image_title)])
 
         # Upload to MariaDB
         mariadb_connection = mariadb.connect(host=current_app.config['HOST'], user=current_app.config['USER'], password=current_app.config['PASSWORD'], database=current_app.config['DB'])
