@@ -155,7 +155,7 @@ def proxy_request(request, path):
         ## Get a timestamp
 
         timestamp = str(calendar.timegm(now.utctimetuple()))
-        image_id = '-'.join([timestamp, slugify(image_title)])
+        image_id = '-'.join([timestamp, slugify(image_title, separator="_")])
 
         # Upload to MariaDB
         mariadb_connection = mariadb.connect(host=current_app.config['HOST'], user=current_app.config['USER'], password=current_app.config['PASSWORD'], database=current_app.config['DB'])
