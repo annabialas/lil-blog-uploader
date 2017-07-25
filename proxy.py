@@ -155,7 +155,9 @@ def proxy_request(request, path):
         ## Get a timestamp
 
         timestamp = str(calendar.timegm(now.utctimetuple()))
-        image_id = '-'.join([timestamp, slugify(image_title, separator="_")])
+        file_extension = get_extenstion(filename)
+        new_filename = '-'.join([timestamp, slugify(image_title, separator="_")])
+        image_id = '.'.join([new_filename, file_extension])
 
         # Upload to MariaDB
         mariadb_connection = mariadb.connect(host=current_app.config['HOST'], user=current_app.config['USER'], password=current_app.config['PASSWORD'], database=current_app.config['DB'])
@@ -172,10 +174,6 @@ def proxy_request(request, path):
 
         mariadb_connection.close()
 
-        # Assign new filename based on the unique _id corresponding to the one in MariaDB
-        file_extension = get_extenstion(filename)
-        new_filename = '.'.join([image_id, file_extension])
-
         # Upload to s3
         s3 = boto3.client(
             's3',
@@ -183,7 +181,7 @@ def proxy_request(request, path):
             aws_secret_access_key=current_app.config['AWS_SECRET_ACCESS_KEY'],
         )
 
-        s3.upload_fileobj(f.stream, 'archive-my-trash', new_filename, ExtraArgs={'ContentType': get_mime_type(filename)})
+        s3.upload_fileobj(f.stream, 'archive-my-trash', image_id, ExtraArgs={'ContentType': get_mime_type(filename)})
 
         return render_template('success.html', context={'heading': "Your file is up!" ,
                                                         'url': "https://{}.s3.amazonaws.com/{}".format(current_app.config['S3_BUCKET'], filename) })
