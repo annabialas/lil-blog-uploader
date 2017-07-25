@@ -19,3 +19,5 @@ input[type="file"] {
     padding-bottom: 45px;
     line-height: 10px;
 }
+
+img { margin: 0 auto; width: 400px; height: auto; }

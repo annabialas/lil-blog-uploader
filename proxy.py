@@ -16,6 +16,7 @@ from datetime import datetime
 import calendar
 import re
 from slugify import slugify
+from random import randint
 
 ##
 # Mime typing checking, taken straight from Perma (more rigorous than WTForms)
@@ -183,7 +184,14 @@ def proxy_request(request, path):
 
         s3.upload_fileobj(f.stream, 'archive-my-trash', image_id, ExtraArgs={'ContentType': get_mime_type(filename)})
 
+        resource = boto3.resource('s3')
+        my_bucket = resource.Bucket('archive-my-trash')
+        data = [ object.key for object in my_bucket.objects.all() ]
+        random_filename = data[randint(0, len(data)-1)]
+
+        url = s3.generate_presigned_url('get_object', Params={'Bucket': 'archive-my-trash', 'Key': random_filename,}, ExpiresIn=120)
+
         return render_template('success.html', context={'heading': "Your file is up!" ,
-                                                        'url': "https://{}.s3.amazonaws.com/{}".format(current_app.config['S3_BUCKET'], filename) })
+                                                        'url': url })
     return render_template('uploader.html', context={'heading': 'Trash Exchange', 'limit': current_app.config['MAX_CONTENT_LENGTH']/1024/1024}, form=form)
 
