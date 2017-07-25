@@ -165,6 +165,9 @@ def proxy_request(request, path):
 
         cursor = mariadb_connection.cursor()
 
+        cursor.execute("SELECT _id FROM images ORDER BY RAND() LIMIT 1")
+        random_filename = cursor.fetchone()
+
         try:
             cursor.execute("INSERT INTO images (_id,date,format,original_filename,given_title) VALUES (%s,%s,%s,%s,%s)", (image_id,image_datetime,image_format,original_name,image_title))
         except mariadb.Error as error:
@@ -184,14 +187,13 @@ def proxy_request(request, path):
 
         s3.upload_fileobj(f.stream, 'archive-my-trash', image_id, ExtraArgs={'ContentType': get_mime_type(filename)})
 
-        resource = boto3.resource('s3')
-        my_bucket = resource.Bucket('archive-my-trash')
-        data = [ object.key for object in my_bucket.objects.all() ]
-        random_filename = data[randint(0, len(data)-1)]
+        # resource = boto3.resource('s3')
+        # my_bucket = resource.Bucket('archive-my-trash')
+        # data = [ object.key for object in my_bucket.objects.all() ]
+        # random_filename = data[randint(0, len(data)-1)]
 
-        url = s3.generate_presigned_url('get_object', Params={'Bucket': 'archive-my-trash', 'Key': random_filename,}, ExpiresIn=120)
+        url = s3.generate_presigned_url('get_object', Params={'Bucket': 'archive-my-trash', 'Key': random_filename[0],}, ExpiresIn=120)
 
-        return render_template('success.html', context={'heading': "Your file is up!" ,
-                                                        'url': url })
+        return render_template('success.html', context={'heading': "Your file is up!" , 'url': url })
     return render_template('uploader.html', context={'heading': 'Trash Exchange', 'limit': current_app.config['MAX_CONTENT_LENGTH']/1024/1024}, form=form)
 
