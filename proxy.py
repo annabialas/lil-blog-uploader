@@ -95,7 +95,7 @@ class UploadForm(FlaskForm):
                      label="valid formats: {}".format(", ".join(file_extension_lookup.keys())))
     title = StringField(label="Your Title")
 
-def proxy_request(request, path):
+def proxy_request(request):
     '''
         This function will be called on every web request caught by our
         default route handler (that is, on every request except for:

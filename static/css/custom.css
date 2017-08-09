@@ -1,8 +1,9 @@
 html, body {
     height: 100%;
+    font-family: 'Inconsolata', monospace;
 }
 
-div.wrapper {
+/*div.wrapper {
     height:100%;
     display: -webkit-flex;
     display: flex;
@@ -11,7 +12,7 @@ div.wrapper {
     -webkit-justify-content: center;
     justify-content:center;
     text-align: center;
-}
+}*/
 
 input[type="file"] {
     width: 200px;
@@ -19,5 +20,38 @@ input[type="file"] {
     padding-bottom: 45px;
     line-height: 10px;
 }
+
+.top-nav { 
+    margin: 30px 0px;
+}
+
+.header { margin: 0px; text-align: left; }
+
+.header h2 { 
+    font-family: 'Fabriga', sans-serif; 
+    margin: 0px; 
+    letter-spacing: initial; 
+}
+
+.navbar { 
+    height: 104px; 
+    border: none; 
+    line-height: 104px;
+    vertical-align: bottom;
+}
+
+.navbar-item { float: right; }
+.navbar-item a { font-size: 14px; }
+.navbar-link { margin-left: 35px; }
+
+.splash-section { 
+    border-top: solid #333 1px;
+    border-bottom: solid #333 1px; 
+    padding: 30px 0px;
+    margin: 30px 0px;
+}
+
+.splash-section p { margin: 0px; font-family: 'Open Sans', sans-serif; }
+
 
 img { margin: 0 auto; width: 400px; height: auto; }
