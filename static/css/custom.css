@@ -14,10 +14,12 @@ html, body {
     text-align: center;
 }*/
 
+form { margin: 30px 0px; }
+
+input[type="text"], textarea, .button { border-radius: 0px; }
+
 input[type="file"] {
-    width: 200px;
-    padding-top: 30px;
-    padding-bottom: 45px;
+    width: 300px;
     line-height: 10px;
 }
 
@@ -29,6 +31,7 @@ input[type="file"] {
 
 .header h2 { 
     font-family: 'Fabriga', sans-serif; 
+    font-weight: bold;
     margin: 0px; 
     letter-spacing: initial; 
 }
@@ -40,9 +43,12 @@ input[type="file"] {
     vertical-align: bottom;
 }
 
-.navbar-item { float: right; }
-.navbar-item a { font-size: 14px; }
-.navbar-link { margin-left: 35px; }
+.navbar-item { float: none; display: inline-block; }
+
+.navbar-item:first-child { margin: 0px 60px 0px 0px; }
+.navbar-item:last-child { margin: 0px 0px 0px 60px; }
+
+.navbar-link { font-size: 16px; margin: 0px; }
 
 .splash-section { 
     border-top: solid #333 1px;
@@ -51,7 +57,30 @@ input[type="file"] {
     margin: 30px 0px;
 }
 
-.splash-section p { margin: 0px; font-family: 'Open Sans', sans-serif; }
+.splash-section p { margin: 0px; font-family: 'Elena Web Basic', serif; }
 
+.info-section {
+    margin: 30px 0px;
+}
+
+.info-section h2 { 
+    font-family: 'Fabriga', sans-serif; 
+    font-size: 24px;
+    line-height:30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: initial;
+}
+
+.info-section p { 
+    font-size: 16px;
+    line-height: 20px; 
+    vertical-align: bottom;
+    letter-spacing: .1rem;
+}
+
+@media (max-width: 976px) {
+    .navbar { display: none; }
+}
 
 img { margin: 0 auto; width: 400px; height: auto; }

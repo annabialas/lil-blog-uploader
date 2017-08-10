@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container">
   <form method="POST" enctype="multipart/form-data" action="/can">
     {{ form.csrf_token }}
+    <!-- If Errors -->
     {% if form.errors %}
       <div class="form-errors" style="width: 67%;
                                       padding-top: 15px;
@@ -17,12 +19,27 @@
           </ul>
       </div>
     {% endif %}
-    <p>Upload any png, gif, or jpeg up to {{ context['limit'] }} MB</p>
-    {{ form.file(accept=".png,.jpg,.jpeg,.gif") }}
-    <div class="input text">
-      {{ form.title.label }}{{ form.title }}
+    <!-- End Errors -->
+
+    <div class="row">
+      <div class="six columns">
+        {{ form.title.label }}
+      </div>
+      <div class="six columns">
+        {{ form.title(class_="u-full-width", placeholder="placeholder") }}
+      </div>
     </div>
-    <p><button class="button button-primary" type="submit">Upload</button></p>
+    <div class="row">
+      <div class="six columns">
+        <label>Upload any png, gif, or jpeg up to {{ context['limit'] }} MB</label>
+      </div>
+      <div class="six columns">
+        {{ form.file(accept=".png,.jpg,.jpeg,.gif") }}
+      </div>
+    </div>
+    
+    <button class="button button-primary" type="submit">Submit</button>
 
   </form>
+</div>
 {% endblock content %}
