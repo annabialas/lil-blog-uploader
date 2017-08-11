@@ -4,6 +4,7 @@
 <div class="container">
   <form method="POST" enctype="multipart/form-data" action="/can">
     {{ form.csrf_token }}
+
     <!-- If Errors -->
     {% if form.errors %}
       <div class="form-errors" style="width: 67%;
@@ -37,9 +38,7 @@
         {{ form.file(accept=".png,.jpg,.jpeg,.gif") }}
       </div>
     </div>
-    
     <button class="button button-primary" type="submit">Submit</button>
-
   </form>
 </div>
 {% endblock content %}

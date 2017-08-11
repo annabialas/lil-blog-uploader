@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p><img src="{{ context['url'] }}"/></p>
-    <p><a class="button" href="/}">Upload Another</a></p>
+<div class="container">
+	<div class="get-back">
+    	<img src="{{ context['url'] }}"/>
+    	<div class="row">
+    		<div class="six columns">
+    			<a class="button" href="{{ context['url'] }}" download>Download</a>
+    		</div>
+    		<div class="six columns">
+    			<a class="button" href="/can">Keep Donating!</a>
+    		</div>
+    	</div>
+	</div>
+</div>
 {% endblock content %}

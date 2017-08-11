@@ -2,24 +2,60 @@
 
 {% block content %}
 <div class="container">
-    <div class="splash-section">
-      <p>Trash Exchange is a web application for collecting and exchanging born-digital materials users have deemed unworthy of keeping on their machines. Through inviting its visitors to dig up their digital trash, Trash Exchange strives to create a space for sharing and displaying deleted images and screenshots with the hope of better understanding the role of curation in forming digital memories.</p>
+  <div class="splash-section">
+    <p>Trash Exchange is a web application for collecting and exchanging born-digital materials users have deemed unworthy of keeping on their machines. Through inviting its visitors to dig up their digital trash, Trash Exchange strives to create a space for sharing and displaying deleted images and screenshots with the hope of better understanding the role of curation in forming digital memories.</p>
+  </div>
+</div>
+<div class="container">
+  <div class="info-section">
+    <h2>How does it work?</h2>
+    <p>A step-by-step guide to exchanging <i>your</i> digital trash</p>
+    <div class="row">
+      <div class="four columns">
+        <div class="info-step">1. <span>Open your trash folder</span></div>
+        <div class="img-container">
+          <img id="click-trash" src="{{ url_for('static', filename='img/clicktrash.png')}}"/>
+        </div>
+      </div>
+      <div class="four columns">
+        <div class="info-step">2. <span>Choose an image or a gif</span></div>
+        <div class="img-container">
+          <img src="{{ url_for('static', filename='img/page2.png')}}"/>
+        </div>
+      </div>
+      <div class="four columns">
+        <div class="info-step">3. <span>Drag and drop it</span></div>
+        <div class="img-container">
+          <img src="{{ url_for('static', filename='img/page3.png')}}"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <div class="info-step">4. <span>Annotate it</span></div>
+        <div class="img-container">
+          <img src="{{ url_for('static', filename='img/page4.png')}}"/>
+        </div>
+      </div>
+      <div class="four columns">
+        <div class="info-step">5. <span>Submit</span></div>
+        <div class="img-container">
+          <img src="{{ url_for('static', filename='img/submit.png')}}"/>
+        </div>
+      </div>
+      <div class="four columns">
+        <div class="info-step"><span>6. Get one back</span></div>
+        <div class="img-container">
+          <img src="{{ url_for('static', filename='img/page6.png')}}"/>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="container">
-    <div class="info-section">
-      <h2>How does it work?</h2>
-      <p>A step-by-step guide to exchanging <i>your</i> digital trash</p>
-    </div>
-    <div class="row">
-      <div class="four columns">1. Open your trash folder</div>
-      <div class="four columns">2. Choose an image or a gif</div>
-      <div class="four columns">3. Drag and drop it</div>
-    </div>
-    <div class="row">
-      <div class="four columns">4. Annotate it</div>
-      <div class="four columns">5. Submit</div>
-      <div class="four columns">6. Get one back</div>
-    </div>
-</div>   
+</div>
+<div class="container">
+  <div class="donate-trash">
+    <button class="button button-primary">Donate Trash</button>
+  </div>
+</div>
+
 {% endblock content %}
