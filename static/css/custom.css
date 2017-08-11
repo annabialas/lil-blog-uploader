@@ -1,3 +1,14 @@
+@font-face {
+    font-family: Fabriga;
+    src: url(../fonts/Fabriga-Bold.ttf);
+}
+
+@font-face {
+    font-family: Elena Web Basic;
+    src: url(../fonts/ElenaWebBasic-Regular.ttf);
+}
+
+
 body {
     margin-bottom: 140px;
     font-family: 'Inconsolata', monospace;
