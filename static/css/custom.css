@@ -130,6 +130,8 @@ label[for=title] { line-height: 38px; vertical-align: middle; }
 
 .info-step span { font-weight: bold; }
 
+.info-step { margin-bottom: 30px; }
+
 .donate-trash { 
     margin: 30px 0px 60px 0px;
     padding: 0px 0px 30px 0px;
