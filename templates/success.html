@@ -1,6 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p><img src="{{ context['url'] }}"/></p>
-    <p><a class="button" href="/}">Upload Another</a></p>
+<div class="container">
+  <div class="info-section">
+    <h2>Success!</h2>
+    <p>Thanks for contributing your trash. Below find a piece someone else contributed. Happy dumpster diving!</p>
+  </div>
+</div>
+<div class="container">
+	<div class="get-back">
+    	<img src="{{ context['url'] }}"/>
+    	<div class="row">
+    		<div class="six columns" id="right">
+    			<a class="button" href="{{ context['url'] }}" download style="width: 160px;" id="download">Download</a>
+    		</div>
+    		<div class="six columns" id="left">
+    			<a class="button button-primary" href="/can" style="width: 160px;">Keep Donating!</a>
+    		</div>
+    	</div>
+	</div>
+</div>
 {% endblock content %}

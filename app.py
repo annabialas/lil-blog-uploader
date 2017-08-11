@@ -47,25 +47,45 @@ error_handling.init_app(app)
 ### ROUTES
 ###
 
-@app.route('/', defaults={'path': ''}, methods=['GET', 'POST'])
-@app.route('/<path:path>')
-def catch_all(path):
-    '''
-        All requests are caught by this route, unless explicitly caught by
-        other more specific patterns.
-        http://flask.pocoo.org/docs/0.12/design/#the-routing-system
-    '''
-    def fallback():
-        return render_template('generic.html', context={'heading': "Trash Exchange",
-                                                        'message': "a static site helper"})
+# @app.route('/', defaults={'path': ''}, methods=['GET', 'POST'])
+
+# @app.route('/<path:path>')
+
+@app.route('/')
+def render_index():
+    return render_template('index.html', context={'heading': "Trash Exchange"})
+
+@app.route('/can', methods=['GET', 'POST'])
+def provide_exchange():
 
     try:
-        proxied_response = proxy_request(request, path)
+        proxied_response = proxy_request(request)
         if proxied_response:
             return proxied_response
         else:
             app.logger.warning("No response returned by proxied endpoint.")
-            return fallback()
+            return render_template('generic.html', context={'heading': "Trash Exchange",'message': "in the try"})
     except NameError:
         app.logger.warning("No proxy function available.")
-        return fallback()
+        return render_template('generic.html', context={'heading': "Trash Exchange",'message': "no proxy"})
+
+# def catch_all(path):
+#     '''
+#         All requests are caught by this route, unless explicitly caught by
+#         other more specific patterns.
+#         http://flask.pocoo.org/docs/0.12/design/#the-routing-system
+#     '''
+#     def fallback():
+#         return render_template('generic.html', context={'heading': "Trash Exchange",
+#                                                         'message': "a static site helper"})
+
+#     try:
+#         proxied_response = proxy_request(request, path)
+#         if proxied_response:
+#             return proxied_response
+#         else:
+#             app.logger.warning("No response returned by proxied endpoint.")
+#             return fallback()
+#     except NameError:
+#         app.logger.warning("No proxy function available.")
+#         return fallback()
