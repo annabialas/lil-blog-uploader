@@ -2,6 +2,14 @@
 
 {% block content %}
 <div class="container">
+  <div class="info-section">
+    <h2>Donate Trash</h2>
+    <p>Contribute a piece of your digital trash and receive one back in exchange</p>
+  </div>
+</div>
+
+<div class="container">
+
   <form method="POST" enctype="multipart/form-data" action="/can">
     {{ form.csrf_token }}
 
@@ -27,18 +35,20 @@
         {{ form.title.label }}
       </div>
       <div class="six columns">
-        {{ form.title(class_="u-full-width", placeholder="placeholder") }}
+        {{ form.title(class_="u-full-width", placeholder="e.g. 'My Trash'") }}
       </div>
     </div>
     <div class="row">
       <div class="six columns">
-        <label>Upload any png, gif, or jpeg up to {{ context['limit'] }} MB</label>
+        <label>Upload any png, gif, or jpeg up to {{ context['limit'] }} MB*</label>
       </div>
       <div class="six columns">
         {{ form.file(accept=".png,.jpg,.jpeg,.gif") }}
       </div>
     </div>
-    <button class="button button-primary" type="submit">Submit</button>
+    <div class="donate-trash">
+      <button class="button button-primary" type="submit">Submit</button>
+    </div>
   </form>
 </div>
 {% endblock content %}

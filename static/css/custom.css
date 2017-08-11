@@ -26,19 +26,25 @@ footer {
     vertical-align: middle;
 }
 
+.button { margin: 0px; }
+
 footer .container { border-top: solid #000 1px; }
 
 form { 
-    margin: 30px 0px;
-
+    margin: 0px;
 }
 
-input[type="text"], textarea, .button { border-radius: 0px; }
+input[type="text"], .button { border-radius: 0px; }
 
 input[type="file"] {
     width: 300px;
     line-height: 10px;
+    margin-bottom: 30px;
 }
+
+input[type="text"] { margin-bottom: 45px; }
+
+label[for=title] { line-height: 38px; vertical-align: middle; }
 
 .top-nav { 
     margin: 30px 0px;
@@ -108,22 +114,22 @@ input[type="file"] {
 .info-section .img-container img {
     width: 160px;
     height: auto;
-    margin: 20px 0px 30px 0px;
+    margin: 0px 0px 30px 0px;
 }
 
 .info-step span { font-weight: bold; }
 
 .donate-trash { 
-    margin: 30px 0px;
-    padding: 30px 0px;
+    margin: 30px 0px 60px 0px;
+    padding: 0px 0px 30px 0px;
     text-align: center;
 }
 
-.donate-trash button { width: 300px; height: 80px; }
+.donate-trash button { width: 300px; height: 60px; font-size: 18px;}
 
 .get-back { 
     text-align: center; 
-    margin: 30px 0px 90px 0px;
+    margin: 0px 0px 90px 0px;
 }
 
 .get-back img { margin: 30px 0px 60px 0px; }

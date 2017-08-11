@@ -2,14 +2,20 @@
 
 {% block content %}
 <div class="container">
+  <div class="info-section">
+    <h2>Success!</h2>
+    <p>Thanks for contributing your trash. Below find a piece someone else contributed. Happy dumpster diving!</p>
+  </div>
+</div>
+<div class="container">
 	<div class="get-back">
     	<img src="{{ context['url'] }}"/>
     	<div class="row">
-    		<div class="six columns">
-    			<a class="button" href="{{ context['url'] }}" download>Download</a>
+    		<div class="six columns" style="text-align: right;">
+    			<a class="button" href="{{ context['url'] }}" download style="width: 160px;">Download</a>
     		</div>
-    		<div class="six columns">
-    			<a class="button" href="/can">Keep Donating!</a>
+    		<div class="six columns" style="text-align: left;">
+    			<a class="button button-primary" href="/can" style="width: 160px;">Keep Donating!</a>
     		</div>
     	</div>
 	</div>
